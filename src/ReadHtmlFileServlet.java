@@ -10,9 +10,52 @@ import java.util.stream.Collectors;
 // https://stackoverflow.com/a/1464366/9586230
 
 public class ReadHtmlFileServlet extends HttpServlet {
+    private int i;
+
+    private static String modifyElements(String s, HttpServletRequest req) {
+        if (req.getSession().getAttribute("count") != null) {
+            s = s.replaceAll("<li id=\"c1\">.*</li>", "<li id=\"c1\">" + req.getSession().getAttribute("count") + "</li>");
+        }
+        if (req.getParameter("n1") != null) {
+            s = s.replaceAll("<td id=\"n1\">.*</td>", "<td id=\"n1\">" + req.getParameter("n1") + "</td>");
+        }
+        if (req.getParameter("n2") != null) {
+            s = s.replaceAll("<td id=\"n2\">.*</td>", "<td id=\"n2\">" + req.getParameter("n2") + "</td>");
+        }
+        if (req.getParameter("n3") != null) {
+            s = s.replaceAll("<td id=\"n3\">.*</td>", "<td id=\"n3\">" + req.getParameter("n3") + "</td>");
+        }
+
+        if (req.getParameter("t1") != null) {
+            s = s.replaceAll("<td id=\"t1\">.*</td>", "<td id=\"t1\">" + req.getParameter("t1") + "</td>");
+        }
+        if (req.getParameter("t2") != null) {
+            s = s.replaceAll("<td id=\"t2\">.*</td>", "<td id=\"t2\">" + req.getParameter("t2") + "</td>");
+        }
+        if (req.getParameter("t3") != null) {
+            s = s.replaceAll("<td id=\"t3\">.*</td>", "<td id=\"t3\">" + req.getParameter("t3") + "</td>");
+        }
+
+        if (req.getParameter("s1") != null) {
+            s = s.replaceAll("<li id=\"s1\">.*</li>", "<li id=\"s1\">" + req.getParameter("s1") + "</li>");
+        }
+        if (req.getParameter("s2") != null) {
+            s = s.replaceAll("<li id=\"s2\">.*</li>", "<li id=\"s2\">" + req.getParameter("s2") + "</li>");
+        }
+        if (req.getParameter("s3") != null) {
+            s = s.replaceAll("<li id=\"s3\">.*</li>", "<li id=\"s3\">" + req.getParameter("s3") + "</li>");
+        }
+        return s;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getSession().getAttribute("count") == null) {
+            i = 0;
+        }
+
+        i++;
+        req.getSession().setAttribute("count", i);
 //        resp.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter writer = resp.getWriter();
@@ -20,7 +63,8 @@ public class ReadHtmlFileServlet extends HttpServlet {
 
 // In Java 8
             String text = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
-                    .lines()
+                    .lines().map((String s) -> modifyElements(s, req)
+                    )
                     .collect(Collectors.joining(System.lineSeparator()));
             writer.println(text);
 
