@@ -1,3 +1,5 @@
+package com.kirilo.java.servlets;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +61,7 @@ public class ReadHtmlFileServlet extends HttpServlet {
 //        resp.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter writer = resp.getWriter();
-             InputStream inputStream = getClass().getResourceAsStream("htm/start.html")) {
+             InputStream inputStream = getClass().getResourceAsStream("/start.html")) {
 
 // In Java 8
             String text = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
