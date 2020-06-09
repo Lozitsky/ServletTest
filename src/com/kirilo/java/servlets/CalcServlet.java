@@ -7,17 +7,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CalcServlet extends HttpServlet {
 
     private final OperationsFactory operationFactory = new OperationsFactory();
-    private List<String> expressionList;
+//    private List<String> expressionList;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,9 +37,10 @@ public class CalcServlet extends HttpServlet {
                     "           <li>" + req.getParameter("one") + "</li>\n" +
                     "           <li>" + req.getParameter("two") + "</li>\n" +
                     "           <li>" + req.getParameter("operation") + "</li>\n" +
+                    "           " +
                     getExpressionList(req).stream()
                             .map(s -> "<li>" + s + "</li>")
-                            .collect(Collectors.joining(System.lineSeparator())) +
+                            .collect(Collectors.joining(System.lineSeparator())) + "\n" +
 
                     "       </ul>\n" +
                     "   </div>\n" +
@@ -49,18 +50,26 @@ public class CalcServlet extends HttpServlet {
     }
 
     private List<String> getExpressionList(HttpServletRequest req) {
-        double one = Double.parseDouble(req.getParameter("one"));
-        double two = Double.parseDouble(req.getParameter("two"));
-        String operation = req.getParameter("operation");
+        final double one = Double.parseDouble(req.getParameter("one"));
+        final double two = Double.parseDouble(req.getParameter("two"));
+        final String operation = req.getParameter("operation");
         final OperationType operationType = OperationType.valueOf(operation.toUpperCase());
 
-        if (req.getSession().getAttribute("expression") == null) {
+
+        final HttpSession session = req.getSession();
+
+        final List<String> expressionList;
+        final Object expression = session.getAttribute("expression");
+        if (expression != null) {
+            expressionList = (ArrayList<String>) expression;
+        } else {
             expressionList = new ArrayList<>();
         }
+
         expressionList.add(MessageFormat.format("{0} {1} {2} = {3}",
                 one, operationType.getOperation(), two, operationFactory.calculate(operationType, one, two)));
 
-        req.getSession().setAttribute("expression", expressionList);
+        session.setAttribute("expression", expressionList);
 
         return expressionList;
     }

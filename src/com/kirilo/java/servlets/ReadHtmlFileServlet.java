@@ -65,8 +65,7 @@ public class ReadHtmlFileServlet extends HttpServlet {
 
 // In Java 8
             String text = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
-                    .lines().map((String s) -> modifyElements(s, req)
-                    )
+                    .lines().map((String s) -> modifyElements(s, req))
                     .collect(Collectors.joining(System.lineSeparator()));
             writer.println(text);
 
