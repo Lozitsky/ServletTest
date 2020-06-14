@@ -16,6 +16,31 @@
         <servlet-name>SessionTest</servlet-name>
         <servlet-class>com.kirilo.java.servlets.SessionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HelloWorldExample</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.HelloWorldExample</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RequestInfoExample</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.RequestInfoExample</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RequestHeaderExample</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.RequestHeaderExample</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RequestParamExample</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.RequestParamExample</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TomcatCookieExample</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.CookieExample</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SessionExample</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.SessionExample</servlet-class>
+    </servlet>
+<!--                                              mapping                             -->
     <servlet-mapping>
         <servlet-name>ReadHtmlFileServlet</servlet-name>
         <url-pattern>/start</url-pattern>
@@ -28,7 +53,42 @@
         <servlet-name>SessionTest</servlet-name>
         <url-pattern>/session_test</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HelloWorldExample</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestInfoExample</servlet-name>
+        <url-pattern>/request_info/*</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>htm/start.html</welcome-file>
     </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>RequestHeaderExample</servlet-name>
+        <url-pattern>/request_header</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestParamExample</servlet-name>
+        <url-pattern>/request_param</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TomcatCookieExample</servlet-name>
+        <url-pattern>/cookie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SessionExample</servlet-name>
+        <url-pattern>/session</url-pattern>
+    </servlet-mapping>
+
+<!--    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>https://kirilo.com</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>-->
+    
 </web-app>
