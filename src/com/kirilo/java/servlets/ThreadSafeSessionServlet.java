@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 // http://yet-another-dev.blogspot.com/2009/08/synchronizing-httpsession.html
 // https://www.ibm.com/developerworks/library/j-jtp09238/index.html
 // https://stackoverflow.com/a/16135293/9586230
-public class SessionServlet extends HttpServlet {
+public class ThreadSafeSessionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

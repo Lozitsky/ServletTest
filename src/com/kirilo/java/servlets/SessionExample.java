@@ -51,7 +51,7 @@ public class SessionExample extends HttpServlet {
             if (attName != null && !attName.equals("")
                     && attValue != null && !attValue.equals("")) {
                 // synchronized session object to prevent concurrent update
-                synchronized (session) {
+                synchronized (session.getId()) {
                     session.setAttribute(attName, attValue);
                 }
             }

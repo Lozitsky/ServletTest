@@ -14,7 +14,7 @@
     </servlet>
     <servlet>
         <servlet-name>SessionTest</servlet-name>
-        <servlet-class>com.kirilo.java.servlets.SessionServlet</servlet-class>
+        <servlet-class>com.kirilo.java.servlets.ThreadSafeSessionServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HelloWorldExample</servlet-name>
@@ -40,6 +40,37 @@
         <servlet-name>SessionExample</servlet-name>
         <servlet-class>com.kirilo.java.servlets.SessionExample</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilterExample</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.filter.FilterExample</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterExample2</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.filter.Filter2Example</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterExample3</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.filter.Filter3Example</servlet-class>
+    </servlet>
+<!--                                             filters                              -->
+    <filter>
+        <filter-name>HelloWorld</filter-name>
+        <filter-class>com.kirilo.java.filter.exam1.HelloWorldFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>message</filter-name>
+        <filter-class>com.kirilo.java.filter.exam2.MessageFilter</filter-class>
+        <init-param>
+            <param-name>message</param-name>
+            <param-value>A message for you!</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <display-name>prePost</display-name>
+        <filter-name>prePost</filter-name>
+        <filter-class>com.kirilo.java.filter.exam3.PrePostFilter</filter-class>
+    </filter>
+    
 <!--                                              mapping                             -->
     <servlet-mapping>
         <servlet-name>ReadHtmlFileServlet</servlet-name>
@@ -80,6 +111,32 @@
         <servlet-name>SessionExample</servlet-name>
         <url-pattern>/session</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterExample</servlet-name>
+        <url-pattern>/filter</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterExample2</servlet-name>
+        <url-pattern>/filter2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterExample3</servlet-name>
+        <url-pattern>/filter3</url-pattern>
+    </servlet-mapping>
+    <!--                                Filter mapping                        -->
+
+    <filter-mapping>
+        <filter-name>HelloWorld</filter-name>
+        <url-pattern>/filter</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>message</filter-name>
+        <url-pattern>/filter2</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>prePost</filter-name>
+        <url-pattern>/filter3</url-pattern>
+    </filter-mapping>
 
 <!--    <security-constraint>
         <web-resource-collection>
@@ -90,5 +147,13 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>-->
+    <error-page>
+        <error-code>400</error-code>
+        <location>/error/40X.html</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/40X.html</location>
+    </error-page>
     
 </web-app>
