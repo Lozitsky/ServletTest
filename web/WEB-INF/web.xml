@@ -52,6 +52,18 @@
         <servlet-name>FilterExample3</servlet-name>
         <servlet-class>com.kirilo.java.servlets.filter.Filter3Example</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.listener.Welcome</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sessioncreate</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.listener.SessionCreateServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sessiondestroy</servlet-name>
+        <servlet-class>com.kirilo.java.servlets.listener.SessionDestroyServlet</servlet-class>
+    </servlet>
 <!--                                             filters                              -->
     <filter>
         <filter-name>HelloWorld</filter-name>
@@ -70,6 +82,16 @@
         <filter-name>prePost</filter-name>
         <filter-class>com.kirilo.java.filter.exam3.PrePostFilter</filter-class>
     </filter>
+    <filter>
+        <display-name>disable filter</display-name>
+        <filter-name>noFilter</filter-name>
+        <filter-class>com.kirilo.java.listener.filter.DisableSessionFilter</filter-class>
+    </filter>
+    
+<!--                                              listener                            -->
+    <listener>
+        <listener-class>com.kirilo.java.listener.SessionLifeCycleEventExample</listener-class>
+    </listener>
     
 <!--                                              mapping                             -->
     <servlet-mapping>
@@ -123,6 +145,18 @@
         <servlet-name>FilterExample3</servlet-name>
         <url-pattern>/filter3</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sessioncreate</servlet-name>
+        <url-pattern>/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sessiondestroy</servlet-name>
+        <url-pattern>/destroy</url-pattern>
+    </servlet-mapping>
     <!--                                Filter mapping                        -->
 
     <filter-mapping>
@@ -136,6 +170,10 @@
     <filter-mapping>
         <filter-name>prePost</filter-name>
         <url-pattern>/filter3</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>noFilter</filter-name>
+        <url-pattern>/index</url-pattern>
     </filter-mapping>
 
 <!--    <security-constraint>
