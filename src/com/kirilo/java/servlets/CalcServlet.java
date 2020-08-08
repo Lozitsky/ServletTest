@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 public class CalcServlet extends HttpServlet {
 
+    public static final String SESSIONMAP = "sessionmap";
     private final OperationsFactory operationFactory = new OperationsFactory();
     private static final Map<String, OperationType> TYPE_MAP = new HashMap<>(OperationType.values().length);
 
@@ -29,6 +30,12 @@ public class CalcServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
 
+        Map<String, String> attribute = (Map<String, String>) req.getServletContext().getAttribute(SESSIONMAP);
+
+        if (attribute == null) {
+            attribute = new HashMap<>();
+        }
+
         try (PrintWriter out = resp.getWriter()) {
             HttpSession session = req.getSession();
 
@@ -41,24 +48,54 @@ public class CalcServlet extends HttpServlet {
                     "    <link rel=\"stylesheet\" href=\"../css/hw.css\">" +
                     "</head>\n" +
                     "<body>\n" +
-                    "ID: " + " " + session.getId() + "<br />" +
+                    "<table cellpadding='20'>" +
                     "   <div>\n" +
+                    "<tr>" +
+                    "<td style='vertical-align:top;'>" +
+                    "       ID: " + " " + session.getId() + "<br />" +
                     "       <ul class=\"\">\n" +
                     "           <li>" + req.getParameter("one") + "</li>\n" +
                     "           <li>" + req.getParameter("two") + "</li>\n" +
                     "           <li>" + req.getParameter("operation") + "</li>\n" +
-                    "           " +
-                    getExpressionList(req, resp).stream()
-                            .map(s -> "<li>" + s + "</li>")
-                            .collect(Collectors.joining(System.lineSeparator())) + "\n" +
+                    "           ");
+
+            final String collect = getExpressionList(req, resp).stream()
+                    .map(s -> "<li>" + s + "</li>")
+                    .collect(Collectors.joining(System.lineSeparator()));
+
+            attribute.put(session.getId(), collect);
+            getServletContext().setAttribute(SESSIONMAP, attribute);
+
+            out.println(collect + "\n" +
 
                     "       </ul>\n" +
-                    "   </div>\n" +
-                    "</body>\n" +
-                    "</html>");
+                    "</td>" +
+                    "<td style='vertical-align:top;'>");
+
+            for (Map.Entry<String, String> entry : attribute.entrySet()) {
+                final String sessionId = entry.getKey();
+                final String listOperation = entry.getValue();
+                out.println("<div style='color:red'>" + sessionId + "</div>" +
+                        "       <ul class=\"\">\n" +
+                        listOperation +
+                        "       </ul>\n"
+                );
+            }
+            out.println(
+                    "</td>" +
+                            "</tr>" +
+                            "   </div>\n" +
+                            "</table>" +
+                            "</body>\n" +
+                            "</html>");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private List<String> getAllExpressionList(Map<String, String> attribute, PrintWriter out) {
+        return null;
     }
 
     //    https://www.stubbornjava.com/posts/java-enum-lookup-by-name-or-field-without-throwing-exceptions
